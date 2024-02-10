@@ -5,6 +5,8 @@ interface ErrorPageProps {
   reset: () => void;
 }
 
-export default ({ error }: ErrorPageProps) => {
+const CustomError = ({ error }: ErrorPageProps) => {
   return <div>{error.message}</div>;
 };
+
+export default CustomError;

@@ -45,3 +45,20 @@ const SnippetDetailPage = async (props: SnippetProps) => {
 };
 
 export default SnippetDetailPage;
+
+
+// from this function we are caching all pages i mean
+// snippet/1
+// snippet/2
+// snippet/3 and so on...
+
+// and its all for production not in development mode.
+export async function generateStaticParams() {
+  const snippets = await db.snippet.findMany();
+
+  return snippets.map((x) => {
+    return {
+      id: x.id.toString(),
+    };
+  });
+}

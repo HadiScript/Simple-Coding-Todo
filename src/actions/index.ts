@@ -1,5 +1,7 @@
 'use server';
 
+import { revalidatePath } from 'next/cache'
+
 import { db } from "@/db";
 import { redirect } from "next/navigation";
 
@@ -12,6 +14,7 @@ export const editSnippet = async (id: number, code: string) => {
     data: { code }
   })
 
+  revalidatePath(`/snippets/${id}`)
   redirect(`/snippets/${id}`)
 }
 
@@ -25,6 +28,7 @@ export const deleteSnippet = async (id: number) => {
     where: { id }
   })
 
+  revalidatePath('/')
   redirect(`/`)
 }
 
@@ -74,6 +78,8 @@ export const createSnippet = async (formState: { message: string }, formData: Fo
     }
   }
 
+  // for caching...
+  revalidatePath('/')
   // Redirect the user back to the root route
   redirect('/');
 }
